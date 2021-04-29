@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # comment
 module Enumerable
   def my_each
@@ -43,7 +44,7 @@ module Enumerable
       if block_given?
         count += 1 if yield(x)
       else
-        count += 1 
+        count += 1
       end
     end
     count
@@ -55,7 +56,7 @@ module Enumerable
       if block_given?
         arr << yield(i)
       else
-        arr = self 
+        arr = self
       end
     end
     arr
