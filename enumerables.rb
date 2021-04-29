@@ -10,36 +10,54 @@ module Enumerable
     self
   end
 
-  # *******************************************
   def my_all?
+    flag = false
     my_each do |x|
-      return true if yield(x) == true
+      if yield(x)
+        flag = true
+      else
+        flag = false
+        break
+      end
     end
-    false
+    flag
   end
 
-  # my_any to return true **************************
   def my_any?
     my_each do |x|
-      return true if yield(x) == true
+      return true if yield(x)
     end
     false
   end
-  # *************************************************
 
   def my_none?
     my_each do |x|
-      return false if yield(x) == true
+      return false if yield(x)
     end
     true
   end
 
-  # my_count to return true *********************
   def my_count
     count = 0
     my_each do |x|
-      count += 1 if yield(x) == true
+      if block_given?
+        count += 1 if yield(x)
+      else
+        count += 1 
+      end
     end
     count
+  end
+
+  def my_map
+    arr = []
+    my_each do |i|
+      if block_given?
+        arr << yield(i)
+      else
+        arr = self 
+      end
+    end
+    arr
   end
 end
