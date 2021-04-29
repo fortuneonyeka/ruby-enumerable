@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
-def foo
+require_relative "enumerables.rb"
 
-end
+puts %w[home game score].my_each{ |x| x != "game"}
+
