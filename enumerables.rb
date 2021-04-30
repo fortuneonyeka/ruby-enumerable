@@ -63,18 +63,6 @@ module Enumerable
     count
   end
 
-  # def my_map Only works with blocks
-  #   arr = []
-  #   my_each do |i|
-  #     if block_given?
-  #       arr << yield(i)
-  #     else
-  #       arr = self
-  #     end
-  #   end
-  #   arr
-  # end
-
   def my_map(&proc)
     arr = []
     my_each do |x|
