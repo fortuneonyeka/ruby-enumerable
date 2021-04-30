@@ -62,3 +62,14 @@ module Enumerable
     arr
   end
 end
+
+def my_map(proc)
+  arr = []
+  self.my_each do |x|
+    arr << proc.call(x)
+  end
+  arr
+end
+
+
+
