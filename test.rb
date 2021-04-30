@@ -47,9 +47,9 @@ puts([-5, 74, 2, 5, 10, 800].my_map { |num| num * 20 })
 
 # my_inject
 puts '-----my_inject----'
-puts(%w[apple berry banana].inject { |word, space| word + space })
+puts(%w[apple berry banana].my_inject { |word, space| word + space })
 puts "\n"
-puts([-5, 74, 2, 5, 10, 800].reduce { |num1, num2| num1 + num2 })
+puts([-5, 74, 2, 5, 10, 800].my_inject { |num1, num2| num1 + num2 })
 
 # multiply_els
 puts '-----multiply_els----'
