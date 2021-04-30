@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-# comment
+# Enumerable Module
 module Enumerable
   def my_each
     x = 0
@@ -8,7 +6,22 @@ module Enumerable
       yield(self[x])
       x += 1
     end
-    self
+  end
+
+  def my_each_with_index
+    i = 0
+    my_each do |element|
+      yield(element, i)
+      i += 1
+    end
+  end
+
+  def my_select
+    arr = []
+    my_each do |i|
+      arr << i if yield(i)
+    end
+    arr
   end
 
   def my_all?
@@ -50,26 +63,39 @@ module Enumerable
     count
   end
 
-  def my_map
+  # def my_map Only works with blocks
+  #   arr = []
+  #   my_each do |i|
+  #     if block_given?
+  #       arr << yield(i)
+  #     else
+  #       arr = self
+  #     end
+  #   end
+  #   arr
+  # end
+
+  def my_map(&proc)
     arr = []
-    my_each do |i|
-      if block_given?
-        arr << yield(i)
-      else
-        arr = self
-      end
+    my_each do |x|
+      arr << proc.call(x)
     end
     arr
   end
-end
 
-def my_map(proc)
-  arr = []
-  self.my_each do |x|
-    arr << proc.call(x)
+  def my_inject
+    final = nil
+    my_each do |i|
+      final = if final.nil?
+                i
+              else
+                yield(final, i)
+              end
+    end
+    final
   end
-  arr
 end
 
-
-
+def multiply_els(arr)
+  arr.my_inject { |x, y| x * y }
+end
