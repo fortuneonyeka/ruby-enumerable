@@ -104,7 +104,7 @@ module Enumerable
     elsif el1.is_a?(Numeric) && block_given?
       start = el1
       my_each { |i| start = yield(start, i) }
-    elsif block_given? && el1.nil?
+    else
       start = to_a[0]
       1.upto(to_a.length - 1) { |i| start = yield(start, to_a[i]) }
     end
