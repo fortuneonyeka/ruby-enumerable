@@ -1,14 +1,19 @@
 # Enumerable Module
 module Enumerable
   def my_each
+    return to_enum(:my_each) unless block_given?
+
+    arr = *self
     x = 0
-    while x < size
-      yield(self[x])
+    while x < arr.size
+      yield(arr[x])
       x += 1
     end
   end
 
   def my_each_with_index
+    return to_enum(:my_each_with_index) unless block_given?
+
     i = 0
     my_each do |element|
       yield(element, i)
@@ -17,6 +22,8 @@ module Enumerable
   end
 
   def my_select
+    return to_enum(:my_selct) unless block_given?
+    
     arr = []
     my_each do |i|
       arr << i if yield(i)
@@ -24,63 +31,93 @@ module Enumerable
     arr
   end
 
-  def my_all?
+  def my_all?(arg = nil)
+    return true if !block_given? && arg.nil?
+    flag = true
+    if !block_given?
+      if arg.instance_of?(Regexp)
+        my_each { |i| flag = false unless arg.match(i)}
+        return flag
+      else
+        my_each { |i| flag = false unless i.is_a?(arg)}
+        return flag
+      end
+    else
+      my_each { |i| flag = false unless yield(i)}
+      return flag
+    end
+  end
+
+  def my_any?(arg = nil)
+    return true if !block_given? && arg.nil?
     flag = false
-    my_each do |x|
-      if yield(x)
-        flag = true
+    if !block_given?
+      if arg.instance_of?(Regexp)
+        my_each { |i| flag = true if arg.match(i)}
+        return flag
       else
-        flag = false
-        break
+        my_each { |i| flag = true if i.is_a?(arg)}
+        return flag
       end
+    else
+      my_each { |i| flag = true if yield(i)}
+      return flag
     end
-    flag
   end
 
-  def my_any?
-    my_each do |x|
-      return true if yield(x)
+  def my_none?(arg = nil)
+    return true if !block_given? && arg.nil?
+    flag = false
+    if !block_given?
+      if arg.instance_of?(Regexp)
+        my_each { |i| flag = true unless arg.match(i)}
+        return flag
+      else
+        my_each { |i| flag = true unless i.is_a?(arg)}
+        return flag
+      end
+    else
+      my_each { |i| flag = true unless yield(i)}
+      return flag
     end
-    false
   end
 
-  def my_none?
-    my_each do |x|
-      return false if yield(x)
-    end
-    true
-  end
-
-  def my_count
+  def my_count(arg = nil)
     count = 0
-    my_each do |x|
-      if block_given?
-        count += 1 if yield(x)
-      else
-        count += 1
-      end
+    if arg != nil
+      my_each { |i| count += 1 if arg == i}
+    elsif block_given?
+      my_each { |i| count += 1 if yield(i)}
+    else
+      my_each { count += 1}
     end
     count
   end
 
-  def my_map(&proc)
+  def my_map(&arg)
+    return to_enum(:my_map) unless block_given?
+
     arr = []
-    my_each do |x|
-      arr << proc.call(x)
-    end
+    my_each { |i| arr << arg.call(i)}
     arr
   end
 
-  def my_inject
-    final = nil
-    my_each do |i|
-      final = if final.nil?
-                i
-              else
-                yield(final, i)
-              end
+  def my_inject(e1 = nil, e2 = nil)
+    start = 0
+    if e1.is_a?(Symbol) && !block_given?
+      start = to_a[0]
+      1.upto(to_a.length - 1) { |i| start = start.send(e1, to_a[i]) }
+    elsif e2.is_a?(Symbol)
+      start = e1
+      0.upto(to_a.length - 1) { |i| start = start.send(e2, to_a[i]) }
+    elsif e1.is_a?(Numeric) && block_given?
+      start = e1
+      my_each { |i| start = yield(start, i) }
+    elsif block_given? && e1.nil?
+      start = to_a[0]
+      1.upto(to_a.length - 1) { |i| start = yield(start, to_a[i])}
     end
-    final
+    start
   end
 end
 
