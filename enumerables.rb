@@ -22,7 +22,7 @@ module Enumerable
   end
 
   def my_select
-    return to_enum(:my_selct) unless block_given?
+    return to_enum(:my_select) unless block_given?
 
     arr = []
     my_each do |i|
@@ -35,52 +35,42 @@ module Enumerable
     return true if !block_given? && arg.nil?
 
     flag = true
-    if !block_given?
-      if arg.instance_of?(Regexp)
-        my_each { |i| flag = false unless arg.match(i) }
-        return flag
-      else
-        my_each { |i| flag = false unless i.is_a?(arg) }
-        return flag
-      end
+    if block_given?
+      my_each { |i| flag = yield(i) }
+    elsif arg.instance_of?(Regexp)
+      my_each { |i| flag = false unless arg.match(i) }
     else
-      my_each { |i| flag = false unless yield(i) }
-      return flag
+      my_each { |i| flag = i.is_a?(arg) }
     end
+    flag
   end
 
   def my_any?(arg = nil)
     return true if !block_given? && arg.nil?
+
     flag = false
-    if !block_given?
-      if arg.instance_of?(Regexp)
-        my_each { |i| flag = true if arg.match(i) }
-        return flag
-      else
-        my_each { |i| flag = true if i.is_a?(arg) }
-        return flag
-      end
+    if block_given?
+      my_each { |i| flag = yield(i) }
+    elsif arg.instance_of?(Regexp)
+      my_each { |i| flag = true if arg.match(i) }
     else
-      my_each { |i| flag = true if yield(i) }
-      return flag
+      my_each { |i| flag = i.is_a?(arg) }
     end
+    flag
   end
 
   def my_none?(arg = nil)
     return true if !block_given? && arg.nil?
+
     flag = false
-    if !block_given?
-      if arg.instance_of?(Regexp)
-        my_each { |i| flag = true unless arg.match(i) }
-        return flag
-      else
-        my_each { |i| flag = true unless i.is_a?(arg) }
-        return flag
-      end
+    if block_given?
+      my_each { |i| flag = !yield(i) }
+    elsif arg.instance_of?(Regexp)
+      my_each { |i| flag = true unless arg.match(i) }
     else
-      my_each { |i| flag = true unless yield(i) }
-      return flag
+      my_each { |i| flag = !i.is_a?(arg) }
     end
+    flag
   end
 
   def my_count(arg = nil)
@@ -99,7 +89,7 @@ module Enumerable
     return to_enum(:my_map) unless block_given?
 
     arr = []
-    my_each { |i| arr << arg.call(i)}
+    my_each { |i| arr << arg.call(i) }
     arr
   end
 
