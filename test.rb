@@ -6,7 +6,7 @@ my_hash = {}
 %w[apple pear coconut].my_each { |word| word }
 
 # my_each_width_index
-%w[apple pear coconut].my_each_with_index { |word, index|  "#{index} is #{word}" }
+%w[apple pear coconut].my_each_with_index { |word, index| "#{index} is #{word}" }
 %w[apple pear coconut].my_each_with_index { |word, index| my_hash[word] = index }
 p my_hash
 

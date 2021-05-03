@@ -23,7 +23,7 @@ module Enumerable
 
   def my_select
     return to_enum(:my_selct) unless block_given?
-    
+
     arr = []
     my_each do |i|
       arr << i if yield(i)
@@ -33,17 +33,18 @@ module Enumerable
 
   def my_all?(arg = nil)
     return true if !block_given? && arg.nil?
+
     flag = true
     if !block_given?
       if arg.instance_of?(Regexp)
-        my_each { |i| flag = false unless arg.match(i)}
+        my_each { |i| flag = false unless arg.match(i) }
         return flag
       else
-        my_each { |i| flag = false unless i.is_a?(arg)}
+        my_each { |i| flag = false unless i.is_a?(arg) }
         return flag
       end
     else
-      my_each { |i| flag = false unless yield(i)}
+      my_each { |i| flag = false unless yield(i) }
       return flag
     end
   end
@@ -53,14 +54,14 @@ module Enumerable
     flag = false
     if !block_given?
       if arg.instance_of?(Regexp)
-        my_each { |i| flag = true if arg.match(i)}
+        my_each { |i| flag = true if arg.match(i) }
         return flag
       else
-        my_each { |i| flag = true if i.is_a?(arg)}
+        my_each { |i| flag = true if i.is_a?(arg) }
         return flag
       end
     else
-      my_each { |i| flag = true if yield(i)}
+      my_each { |i| flag = true if yield(i) }
       return flag
     end
   end
@@ -70,26 +71,26 @@ module Enumerable
     flag = false
     if !block_given?
       if arg.instance_of?(Regexp)
-        my_each { |i| flag = true unless arg.match(i)}
+        my_each { |i| flag = true unless arg.match(i) }
         return flag
       else
-        my_each { |i| flag = true unless i.is_a?(arg)}
+        my_each { |i| flag = true unless i.is_a?(arg) }
         return flag
       end
     else
-      my_each { |i| flag = true unless yield(i)}
+      my_each { |i| flag = true unless yield(i) }
       return flag
     end
   end
 
   def my_count(arg = nil)
     count = 0
-    if arg != nil
-      my_each { |i| count += 1 if arg == i}
+    if !arg.nil?
+      my_each { |i| count += 1 if arg == i }
     elsif block_given?
-      my_each { |i| count += 1 if yield(i)}
+      my_each { |i| count += 1 if yield(i) }
     else
-      my_each { count += 1}
+      my_each { count += 1 }
     end
     count
   end
@@ -102,20 +103,20 @@ module Enumerable
     arr
   end
 
-  def my_inject(e1 = nil, e2 = nil)
+  def my_inject(el1 = nil, el2 = nil)
     start = 0
-    if e1.is_a?(Symbol) && !block_given?
+    if el1.is_a?(Symbol) && !block_given?
       start = to_a[0]
-      1.upto(to_a.length - 1) { |i| start = start.send(e1, to_a[i]) }
-    elsif e2.is_a?(Symbol)
-      start = e1
-      0.upto(to_a.length - 1) { |i| start = start.send(e2, to_a[i]) }
-    elsif e1.is_a?(Numeric) && block_given?
-      start = e1
+      1.upto(to_a.length - 1) { |i| start = start.send(el1, to_a[i]) }
+    elsif el2.is_a?(Symbol)
+      start = el1
+      0.upto(to_a.length - 1) { |i| start = start.send(el2, to_a[i]) }
+    elsif el1.is_a?(Numeric) && block_given?
+      start = el1
       my_each { |i| start = yield(start, i) }
-    elsif block_given? && e1.nil?
+    elsif block_given? && el1.nil?
       start = to_a[0]
-      1.upto(to_a.length - 1) { |i| start = yield(start, to_a[i])}
+      1.upto(to_a.length - 1) { |i| start = yield(start, to_a[i]) }
     end
     start
   end
