@@ -9,6 +9,7 @@ module Enumerable
       yield(arr[x])
       x += 1
     end
+    self
   end
 
   def my_each_with_index
@@ -19,6 +20,7 @@ module Enumerable
       yield(element, i)
       i += 1
     end
+    self
   end
 
   def my_select
