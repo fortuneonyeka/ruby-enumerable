@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/ModuleLength
+
 # Enumerable Module
 module Enumerable
   def my_each
@@ -37,12 +39,14 @@ module Enumerable
     return true if !block_given? && arg.nil?
 
     flag = true
-    if block_given?
-      my_each { |i| flag = yield(i) }
-    elsif arg.instance_of?(Regexp)
-      my_each { |i| flag = false unless arg.match(i) }
-    else
-      my_each { |i| flag = i.is_a?(arg) }
+    my_each do |i|
+      if block_given?
+        return flag = false unless yield(i)
+      elsif arg.instance_of?(Regexp)
+        return flag = false unless arg.match(i)
+      else
+        return flag = false unless i.is_a?(arg)
+      end
     end
     flag
   end
@@ -51,12 +55,14 @@ module Enumerable
     return true if !block_given? && arg.nil?
 
     flag = false
-    if block_given?
-      my_each { |i| flag = yield(i) }
-    elsif arg.instance_of?(Regexp)
-      my_each { |i| flag = true if arg.match(i) }
-    else
-      my_each { |i| flag = i.is_a?(arg) }
+    my_each do |i|
+      if block_given?
+        return flag = true if yield(i)
+      elsif arg.instance_of?(Regexp)
+        return flag = true if arg.match(i)
+      elsif i.is_a?(arg)
+        return flag = true
+      end
     end
     flag
   end
@@ -65,12 +71,14 @@ module Enumerable
     return true if !block_given? && arg.nil?
 
     flag = false
-    if block_given?
-      my_each { |i| flag = !yield(i) }
-    elsif arg.instance_of?(Regexp)
-      my_each { |i| flag = true unless arg.match(i) }
-    else
-      my_each { |i| flag = !i.is_a?(arg) }
+    my_each do |i|
+      if block_given?
+        return flag = true unless yield(i)
+      elsif arg.instance_of?(Regexp)
+        return flag = true unless arg.match(i)
+      else
+        return flag = true unless i.is_a?(arg)
+      end
     end
     flag
   end
@@ -117,3 +125,5 @@ end
 def multiply_els(arr)
   arr.my_inject { |x, y| x * y }
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/ModuleLength
