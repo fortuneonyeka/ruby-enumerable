@@ -36,14 +36,14 @@ module Enumerable
   end
 
   def my_all?(arg = nil)
-    return true if !block_given? && arg.nil?
-
     flag = true
     my_each do |i|
       if block_given?
         return flag = false unless yield(i)
       elsif arg.instance_of?(Regexp)
         return flag = false unless arg.match(i)
+      elsif !block_given? && arg.nil?
+        return flag = false unless i
       else
         return flag = false unless i.is_a?(arg)
       end
@@ -52,14 +52,14 @@ module Enumerable
   end
 
   def my_any?(arg = nil)
-    return true if !block_given? && arg.nil?
-
     flag = false
     my_each do |i|
       if block_given?
         return flag = true if yield(i)
       elsif arg.instance_of?(Regexp)
         return flag = true if arg.match(i)
+      elsif !block_given? && arg.nil?
+        return flag = true if i
       elsif i.is_a?(arg)
         return flag = true
       end
@@ -68,16 +68,16 @@ module Enumerable
   end
 
   def my_none?(arg = nil)
-    return true if !block_given? && arg.nil?
-
-    flag = false
+    flag = true
     my_each do |i|
       if block_given?
-        return flag = true unless yield(i)
+        return flag = false if yield(i)
       elsif arg.instance_of?(Regexp)
-        return flag = true unless arg.match(i)
-      else
-        return flag = true unless i.is_a?(arg)
+        return flag = false if arg.match(i)
+      elsif !block_given? && arg.nil?
+        return flag = false if i
+      elsif i.is_a?(arg)
+        return flag = false
       end
     end
     flag
