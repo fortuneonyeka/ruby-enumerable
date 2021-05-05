@@ -42,12 +42,12 @@ module Enumerable
         return flag = false unless yield(i)
       elsif arg.instance_of?(Regexp)
         return flag = false unless arg.match(i)
-      elsif !block_given? && arg.nil?
-        return flag = false unless i
+      elsif arg.is_a?(Class)
+        return flag = false unless i.is_a?(arg)
       elsif !block_given? && !arg.nil?
         return flag = false unless arg == i
-      else
-        return flag = false unless i.is_a?(arg)
+      elsif !block_given? && arg.nil?
+        return flag = false if i
       end
     end
     flag
@@ -60,12 +60,12 @@ module Enumerable
         return flag = true if yield(i)
       elsif arg.instance_of?(Regexp)
         return flag = true if arg.match(i)
-      elsif !block_given? && arg.nil?
-        return flag = true if i
+      elsif arg.is_a?(Class)
+        return flag = true if i.is_a?(arg)
       elsif !block_given? && !arg.nil?
         return flag = true if arg == i
-      elsif i.is_a?(arg)
-        return flag = true
+      elsif !block_given? && arg.nil?
+        return flag = true if i
       end
     end
     flag
@@ -78,12 +78,12 @@ module Enumerable
         return flag = false if yield(i)
       elsif arg.instance_of?(Regexp)
         return flag = false if arg.match(i)
-      elsif !block_given? && arg.nil?
-        return flag = false if i
+      elsif arg.is_a?(Class)
+        return flag = false if i.is_a?(arg)
       elsif !block_given? && !arg.nil?
         return flag = false if arg == i
-      elsif i.is_a?(arg)
-        return flag = false
+      elsif !block_given? && arg.nil?
+        return flag = false if i
       end
     end
     flag
