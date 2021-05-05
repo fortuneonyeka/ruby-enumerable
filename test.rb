@@ -18,16 +18,19 @@ p my_hash
 %w[apple berry banana].my_all? { |word| word.length < 7 }
 [-5, 74, 2, 5, 10, 800].my_all? { |num| (num.positive? && num.even?) }
 %w[ant bear cat].my_all?(/t/)
+[123, 123, 123].my_all?(123)
 
 # my_any?
 %w[apple berry banana].my_any? { |word| word.length < 4 }
 [-5, 74, 2, 5, 10, 800].my_any? { |num| (num.positive? && num.even?) }
 ['l', 4, nil].my_any?(Numeric)
+[123, 123, 123].my_any?(123)
 
 # my_none?
 %w[apple berry banana].my_none? { |word| word.length > 10 }
 [-5, 74, 2, 5, 10, 800].my_none? { |num| num > 1000 }
 %w[apple berry banana].my_none?(String)
+[123, 123, 123].my_none?(123)
 
 # my_count
 %w[apple berry banana].my_count { |word| word.length > 4 }

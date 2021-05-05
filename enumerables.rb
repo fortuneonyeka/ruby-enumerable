@@ -44,6 +44,8 @@ module Enumerable
         return flag = false unless arg.match(i)
       elsif !block_given? && arg.nil?
         return flag = false unless i
+      elsif !block_given? && !arg.nil?
+        return flag = false unless arg == i
       else
         return flag = false unless i.is_a?(arg)
       end
@@ -60,6 +62,8 @@ module Enumerable
         return flag = true if arg.match(i)
       elsif !block_given? && arg.nil?
         return flag = true if i
+      elsif !block_given? && !arg.nil?
+        return flag = true if arg == i
       elsif i.is_a?(arg)
         return flag = true
       end
@@ -76,6 +80,8 @@ module Enumerable
         return flag = false if arg.match(i)
       elsif !block_given? && arg.nil?
         return flag = false if i
+      elsif !block_given? && !arg.nil?
+        return flag = false if arg == i
       elsif i.is_a?(arg)
         return flag = false
       end
@@ -95,11 +101,15 @@ module Enumerable
     count
   end
 
-  def my_map(&arg)
-    return to_enum(:my_map) unless block_given?
+  def my_map(arg = nil)
+    return to_enum(:my_map, arg) unless block_given? || arg
 
     arr = []
-    my_each { |i| arr << arg.call(i) }
+    if arg
+      my_each { |i| arr << arg.call(i) }
+    else
+      my_each { |i| arr << yield(i) }
+    end
     arr
   end
 
