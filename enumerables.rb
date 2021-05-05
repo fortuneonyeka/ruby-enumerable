@@ -47,7 +47,7 @@ module Enumerable
       elsif !block_given? && !arg.nil?
         return flag = false unless arg == i
       elsif !block_given? && arg.nil?
-        return flag = false if i
+        return flag = false unless i
       end
     end
     flag
