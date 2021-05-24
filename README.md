@@ -1,4 +1,4 @@
-# ruby-enumerable
+# Ruby Enumerable
 
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 

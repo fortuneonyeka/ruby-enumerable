@@ -2,7 +2,7 @@ require_relative '../enumerables'
 
 describe Enumerable do
   describe '#my_each' do
-    let(:check) { [1, 2, 3].my_each }
+    let(:check) { [1, 2, 3].my_each } # Save my_each to a variable to check if returns Enumerator
 
     it 'Iterates through a series of elements of an array' do
       expect([1, 2, 3].my_each { |i| i }).to eq([1, 2, 3])
@@ -16,11 +16,11 @@ describe Enumerable do
   end
 
   describe '#my_each_with_index' do
-    let(:hasx) { {} }
-    let(:arr) { %w[Apple Cherry Orange] }
-    let(:check) { arr.my_each_with_index }
+    let(:hasx) { {} } # Create empty hash
+    let(:arr) { %w[Apple Cherry Orange] } # Create an array
+    let(:check) { arr.my_each_with_index } # Save my_each_with_index to a variable to check if returns Enumerator
 
-    before 'Add keys and values to variable hasx' do
+    before 'Add keys and values to variable hasx' do # To later compare
       arr.my_each_with_index { |i, v| hasx[i] = v }
     end
     it 'Iterates through an array' do
@@ -35,8 +35,8 @@ describe Enumerable do
   end
 
   describe '#my_select' do
-    let(:arr) { [10, 11, 12, 14] }
-    let(:check) { arr.select(&:even?) }
+    let(:arr) { [10, 11, 12, 14] } # Create an array
+    let(:check) { arr.select(&:even?) } # Save content into variable to compare it to my_select
 
     it 'Returns numbers that are even' do
       expect([1, 2, 3, 4].my_select(&:even?)).to eq([2, 4])
