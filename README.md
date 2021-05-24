@@ -27,6 +27,12 @@ $ irb ./test.rb
 ```
 You can also use [Online Ruby Compiler](https://www.tutorialspoint.com/execute_ruby_online.php). Just copy the contents of test.rb there and it will execute the program for you.
 
+To run rspec tests do the following:
+
+- Install rspec with `gem install rspec`
+- In the terminal(Command Promt) and already in the project folder type: `rspec`
+- Feel free to modify and create your own tests.
+
 ### Authors
 
 👤 **Ihedoro Fortunatus**
