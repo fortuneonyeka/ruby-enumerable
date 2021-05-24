@@ -131,14 +131,68 @@ describe Enumerable do
     it 'Returns true if all elements don\'t match the argument' do
       expect(%w[ox fenix carol sun].my_none?(/ant/)).to eq(true)
     end
-    # it 'Returns false if array is empty' do
-    #   expect([].my_any?).to eq(false)
-    # end
-    # it 'Returns false if any element is empty' do
-    #   expect([nil, nil, false].my_any?).to eq(false)
-    # end
-    # it 'Returns error if no element provided' do
-    #   expect { my_any?(Numeric) }.to raise_error(NoMethodError)
-    # end
+    it 'Returns true if array is empty' do
+      expect([].my_none?).to eq(true)
+    end
+    it 'Returns false if any elements are true' do
+      expect([nil, true, false].my_none?).to eq(false)
+    end
+    it 'Returns error if no element provided' do
+      expect { my_none?(Numeric) }.to raise_error(NoMethodError)
+    end
+  end
+
+  describe 'my_count' do
+    it 'Counts the elements in an array' do
+      expect([1, 2, 3, 4, 5].my_count).to eq(5)
+    end
+    it 'Counts the elements in an range' do
+      expect((1..100).my_count).to eq(100)
+    end
+    it 'Counts the elements that are equal to the argument' do
+      expect([2, 4, 2, 3, 2, 5].my_count(2)).to eq(3)
+    end
+    it 'Counts the elements that are even in the array' do
+      expect([2, 4, 2, 3, 2, 5].my_count(&:even?)).to eq(4)
+    end
+    it 'Counts the elements that are multiples of 5' do
+      expect([15, 5, 20, 3, 6, 25].my_count { |i| i % 5 == 0 }).to eq(4)
+    end
+    it 'Returns error if no element provided' do
+      expect { my_count(2) }.to raise_error(NoMethodError)
+    end
+  end
+
+  describe 'my_map' do
+    it 'Returns an array with the product of each number by itself' do
+      expect([1, 2, 3, 4].my_map { |i| i * i }).to eq([1, 4, 9, 16])
+    end
+    it 'Returns an array with the product of each number by itself using a range' do
+      expect((5..10).my_map { |i| i * i }).to eq([25, 36, 49, 64, 81, 100])
+    end
+    it 'Returns an array with upper case words' do
+      expect(%w[AppLe oRangE berrY].my_map { |i| i.upcase }).to eq(%w[APPLE ORANGE BERRY])
+    end
+  end
+
+  describe 'my_inject' do
+    it 'Adds up all the numbers in the range' do
+      expect((5..10).my_inject(:+)).to eq(45)
+    end
+    it 'Adds up all the numbers in the array' do
+      expect([0, 4, 5].my_inject(:+)).to eq(9)
+    end
+    it 'String together all the words' do
+      expect(%w[apple orange berry].my_inject(:+)).to eq('appleorangeberry')
+    end
+    it 'Multiply all numbers to each other and then by 2' do
+      expect([1, 2, 3, 4, 5].my_inject(2, :*)).to eq(240)
+    end
+    it 'Substract all numbers by each other and then 2' do
+      expect([15, 15].my_inject(2) { |i, value| i - value }).to eq(-28)
+    end
+    it 'Return the longest word' do
+      expect(%w{ cat sheep bear }.inject { |memo, word| memo.length > word.length ? memo : word }).to eq('sheep')
+    end
   end
 end
