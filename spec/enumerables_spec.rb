@@ -33,4 +33,16 @@ describe "my_select" do
     expect([1, 3, 2, 7, 8].my_select(&:even?)).to eql([2, 8])
   end
 end
+
+describe "my_all?" do
+  it "returns false when all provided argument are not of the same data type" do
+    expect([1, 3, 2, "home", 8].my_all?(Numeric)).to eql(false)
+  end
+  it "returns true when array containing all elements to which the block or argument given returns true" do
+    expect([1, 3, 2, 7, 8]. my_all?(Numeric)).to eql(true)
+  end
+  it "returns true when all the element in the array are string" do
+    expect(["fan", "foul", "fond"].my_all?).to eq(true)
+  end
+end
 end
