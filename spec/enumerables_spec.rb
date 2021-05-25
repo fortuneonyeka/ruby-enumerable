@@ -3,7 +3,7 @@ require './enumerables'
 describe Enumerable do
   let(:range) { (1..9) }
   let(:arry) { [1, 3, 2, 7, 8] }
-  let(:cities) { %w[lagos abuja New York]}
+  let(:cities) { %w[lagos abuja New York] }
 
   describe 'my_each' do
     it 'returns an enumerator if no block or arguments is given' do
@@ -13,7 +13,6 @@ describe Enumerable do
       expect([1, 3, 2, 7, 8].my_each { |x| x }).to eql(arry)
     end
   end
-
   describe 'my_each_with_index' do
     it 'returns an enumerator if no block is given' do
       expect([1, 3, 2, 7, 8].my_each_with_index).to be_a Enumerator
@@ -107,20 +106,20 @@ describe Enumerable do
       expected = (1..3).my_inject(1) { |x, i| x * i }
       expect(result).to eql(expected)
     end
-    it "returns error if no argument is provided" do
-      expect{my_inject {|i| i * i}}.to raise_error(NoMethodError)
+    it 'returns error if no argument is provided' do
+      expect { my_inject { |i| i * i } }.to raise_error(NoMethodError)
     end
   end
-  
+
   describe 'multiply_els' do
     it 'Multiplies all numbers in the array' do
       expect(multiply_els([1, 3, 4])).to eq(12)
     end
-    it "multplies all numbers in the range" do
+    it 'multplies all numbers in the range' do
       expect(multiply_els((1..4))).to eql(24)
     end
-    it "error is elements cannot be multiplied" do
-      expect{multiply_els(cities)}.to raise_error(TypeError)
+    it 'error is elements cannot be multiplied' do
+      expect { multiply_els(cities) }.to raise_error(TypeError)
     end
   end
 end
