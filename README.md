@@ -27,6 +27,11 @@ $ irb ./test.rb
 ```
 You can also use [Online Ruby Compiler](https://www.tutorialspoint.com/execute_ruby_online.php). Just copy the contents of test.rb there and it will execute the program for you.
 
+Testing With Rspec
+- Test cases have been written carefully to make sure the public methods works as expected
+- From the Terminal run the command
+$ rspec
+
 ### Authors
 
 👤 **Ihedoro Fortunatus**
@@ -41,6 +46,12 @@ You can also use [Online Ruby Compiler](https://www.tutorialspoint.com/execute_r
 - GitHub: [@ad931](https://github.com/ad9311)
 - Twitter: [@adiaz9311](https://twitter.com/adiaz9311)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/ad9311/)
+
+👤 **Boaz Aduda**
+
+- GitHub: [@Aduda-Boaz](https://github.com/Aduda-Boaz)
+- Twitter: [@BoazAduda](https://twitter.com/BoazAduda)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/aduda-boaz/)
 
 
 ### Show your support
