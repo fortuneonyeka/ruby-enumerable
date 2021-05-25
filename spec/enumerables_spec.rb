@@ -88,6 +88,16 @@ describe "any?" do
   end
 
   describe "my_map" do
+    it "when block is given" do
+      result = range.map{|x| x * x}
+      expect(result).to eql([1, 4, 9, 16, 25, 36, 49, 64, 81])
+    end
+    it "returns Enumerator when no block and proc is given" do
+      expect(range.my_map).to be_a Enumerator
+    end 
+  end
+  
+  describe "my_inject" do
     
   end
   
