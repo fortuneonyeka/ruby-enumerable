@@ -16,4 +16,13 @@ describe Enumerable do
       expect([1, 3, 2, 7, 8].my_each{|x| x}).to eql(arry)
     end
   end
+
+describe "my_each_with_index" do
+  it "returns an enumerator if no block is given" do
+    expect([1, 3, 2, 7, 8].my_each_with_index).to be_a Enumerator
+  end
+  it " returns an array with index when block is given" do
+    expect([1, 3, 2, 7, 8].my_each_with_index{|x, i| x}).to eql(arry)
+  end
+end
 end
