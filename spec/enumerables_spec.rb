@@ -25,4 +25,12 @@ describe "my_each_with_index" do
     expect([1, 3, 2, 7, 8].my_each_with_index{|x, i| x}).to eql(arry)
   end
 end
+describe "my_select" do
+  it "returns an enumerator if no block is given" do
+    expect([1, 3, 2, 7, 8].my_select). to be_a Enumerator
+  end
+  it "returns an array containing all elements to which the block given returns true" do
+    expect([1, 3, 2, 7, 8].my_select(&:even?)).to eql([2, 8])
+  end
+end
 end
