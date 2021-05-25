@@ -73,4 +73,23 @@ describe "any?" do
       expect([nil].my_none?).to eql(true)
     end
   end
+
+  describe "my_count" do
+    it "if block given" do
+      expect(arry.my_count).to eql(5)
+    end
+    it "return even numbers when block is given" do
+      expect(arry.my_count(&:even?)).to eql(2)  
+    end
+    it "when block given" do
+    result = arry.my_count{|x| x > 5}
+    expect(result).to eql(2)
+    end
+  end
+
+  describe "my_map" do
+    
+  end
+  
+  
 end
