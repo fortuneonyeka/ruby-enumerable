@@ -107,5 +107,8 @@ describe Enumerable do
       expected = (1..3).my_inject(1) { |x, i| x * i }
       expect(result).to eql(expected)
     end
+    it "returns error if no argument is provided" do
+      expect{my_inject {|i| i * i}}.to raise_error(NoMethodError)
+    end
   end
 end
