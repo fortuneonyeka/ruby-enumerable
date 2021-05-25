@@ -56,4 +56,21 @@ describe "any?" do
     expect(result).to eql(false)
   end
   end
+  describe "my_none?" do
+    it "returns true if the block never returns true" do
+      expect(["fan", "foul", "fond"].my_none?(Numeric)).to eql(true)
+    end
+    it "returns true if regex pattern never matches with the elements" do
+      expect(["fan", "foul", "fond"].my_none?(/w/)).to eql(true)
+    end
+    it "returns false if at least one of the element matches or of the same class" do
+      expect(["fan", "foul", 20, "fond"].my_none?(Numeric)).to eql(false)
+    end
+    it "returns true if array is empty" do
+      expect([].my_none?).to eql(true)
+    end
+    it "returns true if an argument equals nil" do
+      expect([nil].my_none?).to eql(true)
+    end
+  end
 end
