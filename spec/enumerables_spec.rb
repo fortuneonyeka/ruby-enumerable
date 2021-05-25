@@ -45,4 +45,15 @@ describe "my_all?" do
     expect(["fan", "foul", "fond"].my_all?).to eq(true)
   end
 end
+
+describe "any?" do
+  it "returns true when the object is not an array" do
+    result = range.my_any?{|x| x > 7}
+    expect(result).to eql(true)
+  end
+  it "when object is an array" do
+    result = range.my_any?{|x| x == 12}
+    expect(result).to eql(false)
+  end
+  end
 end
