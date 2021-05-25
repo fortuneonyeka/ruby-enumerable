@@ -111,4 +111,16 @@ describe Enumerable do
       expect{my_inject {|i| i * i}}.to raise_error(NoMethodError)
     end
   end
+  
+  describe 'multiply_els' do
+    it 'Multiplies all numbers in the array' do
+      expect(multiply_els([1, 3, 4])).to eq(12)
+    end
+    it "multplies all numbers in the range" do
+      expect(multiply_els((1..4))).to eql(24)
+    end
+    it "error is elements cannot be multiplied" do
+      expect{multiply_els(cities)}.to raise_error(TypeError)
+    end
+  end
 end
