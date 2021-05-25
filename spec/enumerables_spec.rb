@@ -98,8 +98,15 @@ describe "any?" do
   end
   
   describe "my_inject" do
-    
-  end
-  
-  
+    it "when block given" do
+      result = (5..10).my_inject{|sum, n| sum + n}
+        expect(result).to eql(45)
+    end
+    it "when block has a method and an argument" do
+      result = (1..3).my_inject(1) {|x, i| x * i}
+      expected = (1..3).my_inject(1) {|x, i| x * i}
+      expect(result).to eql(expected) 
+    end
+  end 
+
 end
