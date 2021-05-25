@@ -8,5 +8,12 @@ describe Enumerable do
   let(:numbers) {[2, 5, 6, 9, 10, 13, 27, 50]}
   let(:arry) {[1, 3, 2, 7, 8]}
 
-  
+  describe "my_each" do
+    it "returns an enumerator if no block or arguments is given" do
+      expect([1, 3, 2, 7, 8].my_each).to be_a Enumerator
+    end
+    it "returns an array when a block is given" do
+      expect([1, 3, 2, 7, 8].my_each{|x| x}).to eql(arry)
+    end
+  end
 end
