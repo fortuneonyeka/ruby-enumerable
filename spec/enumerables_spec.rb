@@ -3,6 +3,7 @@ require './enumerables'
 describe Enumerable do
   let(:range) { (1..9) }
   let(:arry) { [1, 3, 2, 7, 8] }
+  let(:cities) { %w[lagos abuja New York]}
 
   describe 'my_each' do
     it 'returns an enumerator if no block or arguments is given' do
@@ -81,11 +82,14 @@ describe Enumerable do
       result = arry.my_count { |x| x > 5 }
       expect(result).to eql(2)
     end
+    it 'Returns error if no element provided' do
+      expect { my_count(2) }.to raise_error(NoMethodError)
+    end
   end
 
   describe 'my_map' do
     it 'when block is given' do
-      result = range.map { |x| x * x }
+      result = range.my_map { |x| x * x }
       expect(result).to eql([1, 4, 9, 16, 25, 36, 49, 64, 81])
     end
     it 'returns Enumerator when no block and proc is given' do
